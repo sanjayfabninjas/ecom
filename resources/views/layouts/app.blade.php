@@ -9,15 +9,21 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
+    
+    
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <!-- Fonts -->
+
+    
+    
+    
+    @yield('css')
 </head>
 <body>
     <div id="app">
@@ -25,6 +31,12 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
+                </a>
+                <a class="navbar-brand" href="{{url('/category')}}">
+                    Category
+                </a>
+                <a class="navbar-brand" href="{{url('/product')}}">
+                    Product
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -74,10 +86,66 @@
                 </div>
             </div>
         </nav>
-
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    
+                    <!-- @if ($message = Session::get('success'))
+                    @push('scripts')
+                        <script type="text/javascript">
+                        $(function(){
+                            Swal.fire({
+                                title: 'Success!',
+                                text: '{{ session('success') }}',
+                                icon: 'success',
+                                confirmButtonText: 'Okay'
+                            })
+                        });
+                        </script>
+                    @endpush
+                    
+                    @endif
+                    
+                    @if ($message = Session::get('error'))
+                    <div class="alert alert-danger alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>    
+                        <strong>{{ $message }}</strong>
+                    </div>
+                    @endif
+                    
+                    @if ($message = Session::get('warning'))
+                    <div class="alert alert-warning alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>    
+                        <strong>{{ $message }}</strong>
+                    </div>
+                    @endif
+                    
+                    @if ($message = Session::get('info'))
+                    <div class="alert alert-info alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>    
+                        <strong>{{ $message }}</strong>
+                    </div>
+                    @endif
+                    
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>    
+                        Please check the form below for errors
+                    </div>
+                    @endif -->
+                </div>
+            </div>
+        </div>
         <main class="py-4">
             @yield('content')
         </main>
+        
+        
     </div>
+    <!-- Scripts -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
+    @stack('scripts')
+    
 </body>
 </html>
