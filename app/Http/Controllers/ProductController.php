@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
-use App\Models\User;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -22,7 +23,7 @@ class ProductController extends Controller
     {
         if ($request->ajax()) { 
             $product = Product::where('user_id', Auth::id())->get();
-            return Datatables::of($product)
+            return DataTables::of($product)
                     ->addIndexColumn()
                     ->editColumn('active', function($row){
                         if($row->active == 1){
@@ -44,8 +45,24 @@ class ProductController extends Controller
          return view('product.product');
     }
 
-   public function store(ProductStoreRequest $request, Product $product)
+   public function store(Request $request, Product $product)
     {  
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'price' => 'required | integer | size:5',
+                'stock' => 'required | integer | size:5',
+                'images' => 'required| file| size:512',
+            ]
+        );
+
+        if($validator->fails()){
+            dd(123);
+            // return response()->json(['errors' => $validator->errors()->all()], 400);
+            return response()->json(['errors'=>$validator->errors()]);
+        }  
+
         $input = $request->all();
         $product = Product::updateOrCreate(
                 ['id' => $request->product_id],
@@ -65,7 +82,7 @@ class ProductController extends Controller
             $images =  $product->productImages->pluck('image');
             foreach($images as $image)
             {
-                \Storage::delete('public/'.$image);
+                Storage::delete('public/'.$image);
             }
             $files = $request->file('images');
             foreach ($files as $file) 
@@ -95,11 +112,11 @@ class ProductController extends Controller
     public function edit(product $product)
     {
         return response()->json(
-                                    [
-                                        'product' =>$product,
-                                        'productImage' => ProductImage::where('product_id',$product->id)->get(),
-                                    ]
-                                );
+            [
+                'product' =>$product,
+                'productImage' => ProductImage::where('product_id',$product->id)->get(),
+            ]
+        );
     }
 
     
@@ -108,7 +125,7 @@ class ProductController extends Controller
     {   $images =  $product->productImages->pluck('image');
         foreach($images as $image)
         {
-            \Storage::delete('public/'.$image);
+            Storage::delete('public/'.$image);
         }
         $product->delete($product);
         return response()->json(['success'=>'Product Deleted successfully.']);

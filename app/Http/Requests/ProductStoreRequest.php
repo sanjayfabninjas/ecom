@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ProductStoreRequest extends FormRequest
 {
@@ -13,6 +14,10 @@ class ProductStoreRequest extends FormRequest
      */
     public function authorize()
     {
+        return true;
+    }
+
+    public function wantsJson() {
         return true;
     }
 
@@ -30,4 +35,11 @@ class ProductStoreRequest extends FormRequest
             'images' => 'required'
         ];
     }
+
+    // public function validate() {
+    //     $instance = $this->getValidatorInstance();
+    //     if ($instance->fails()) {
+    //         throw new HttpResponseException(response()->json($instance->errors(), 422));
+    //     }
+    // }
 }

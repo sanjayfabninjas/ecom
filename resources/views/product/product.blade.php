@@ -160,21 +160,20 @@
                                   })
                     },
                     error: function (response) {
-                        console.log(response    );
-                        if(response.responseJSON.errors.length > 0) {
-                            var errorsHtml = '<ul class="kt-font-danger kt-align-left">';
-                            response.responseJSON.errors.forEach(function(msg) {
-                                errorsHtml += '<li> ' + msg + ' </li>';
-                            });
-                            errorsHtml += '</ul>';
-                        }
-                        swal.fire("{{ trans('common.message.alert_error_title') }}", errorsHtml, "error");
-                        myUnblockPage();
-                    
-                        $('#saveBtn').html('Save Changes');
+                        // console.log(response.responseJSON.errors.name);
+                        printErrorMsg(data.error);
+                        
+
+                       $('#saveBtn').html('Save Changes');
                     }
                 });
             });
+            function printErrorMsg (msg) {
+                $.each( msg, function( key, value ) {
+                console.log(key,value);
+                $('#modelHeading').text(value);
+                });
+            }
 
             $('body').on('click','.editProduct',function(){
                 var product_id = $(this).data('id');
