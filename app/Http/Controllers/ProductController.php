@@ -45,23 +45,8 @@ class ProductController extends Controller
          return view('product.product');
     }
 
-   public function store(Request $request, Product $product)
+   public function store(ProductStoreRequest $request, Product $product)
     {  
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required',
-                'price' => 'required | integer | size:5',
-                'stock' => 'required | integer | size:5',
-                'images' => 'required| file| size:512',
-            ]
-        );
-
-        if($validator->fails()){
-            dd(123);
-            // return response()->json(['errors' => $validator->errors()->all()], 400);
-            return response()->json(['errors'=>$validator->errors()]);
-        }  
 
         $input = $request->all();
         $product = Product::updateOrCreate(

@@ -105,7 +105,6 @@
     <script  type="text/javascript">
         $(document).ready( function () {
 
-
             $('#productList').DataTable({
                 processing: true,
                 serverSide: true,
@@ -161,7 +160,7 @@
                     },
                     error: function (response) {
                         // console.log(response.responseJSON.errors.name);
-                        printErrorMsg(data.error);
+                        printErrorMsg(response.error);
                         
 
                        $('#saveBtn').html('Save Changes');
