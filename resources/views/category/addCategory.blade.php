@@ -20,8 +20,8 @@
                         <label for="categoryName">Category Name</label>
                         <input type="text" class="form-control" id="categoryName" name="categoryName" value="{{ $category->name ?? null }}" placeholder="Enter Category">
                     </div>
-                    @if($errors->has('name'))  
-                        <small id="" class="form-text  text-danger">{{ $errors->first('name') }}</small>
+                    @if($errors->has('categoryName'))  
+                        <small id="" class="form-text  text-danger">{{ $errors->first('categoryName') }}</small>
                     @enderror
                     <div class="form-group">
                         <label for="product">Product</label>
