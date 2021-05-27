@@ -54,7 +54,7 @@ class CategoryController extends Controller
 
     public function create(Category $category)
     {
-        return view('category.addCategory',[
+        return view('category.manageCategory',[
             'products' => Product::select('id','name')->get(),
             'category' => $category
         ]);
@@ -78,7 +78,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {   
         $products = Product::select('id','name')->get();
-        return view('category.addCategory',compact('products','category'));
+        return view('category.manageCategory',compact('products','category'));
     }
 
     public function destroy(category $category)

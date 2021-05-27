@@ -36,10 +36,4 @@ class ProductStoreRequest extends FormRequest
         ];
     }
 
-    // public function validate() {
-    //     $instance = $this->getValidatorInstance();
-    //     if ($instance->fails()) {
-    //         throw new HttpResponseException(response()->json($instance->errors(), 422));
-    //     }
-    // }
 }
