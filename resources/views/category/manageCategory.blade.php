@@ -4,6 +4,7 @@
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
     
 @endsection
 @section('content')
@@ -11,9 +12,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-        <a class="btn btn-success" href="{{route('category.index')}}" id="createNewProduct">Back</a></br></br>
-            <div class="">
-                <form action="{{route('category.store')}}" id="categoryForm" method="post">
+        <a class="btn btn-success" href="{{route('category.index')}}">Back</a></br></br>
+            
+                <form action="{{route('category.store')}}"  method="post">
                     @csrf
                     <input type="hidden" name="category_id" value="{{ $category->id ?? null }}" id="category_id">
                     <div class="form-group">
@@ -38,34 +39,29 @@
                     
                     <div class="form-group">
                         <label for="status">Status</label>
-                        @if($category->active == 1)
-                            <input type="radio" class="" name="active" id="1" value="1" checked><label class="form-check-label" for="1">Active</label>
-                            <input type="radio" class="" name="active" id="0" value="0" ><label class="form-check-label" for="0">Inactive</label>
-                        @else
-                            <input type="radio" class="" name="active" id="1" value="1"><label class="form-check-label" for="1">Active</label>
-                            <input type="radio" class="" name="active" id="0" value="0" checked><label class="form-check-label" for="0">Inactive</label>
-                        @endif
-
+                        <input type="hidden" name="is_active" value="0"/>
+                        @php 
+                            $checked = $category->active ? 'checked' : '';
+                        @endphp
+                        <input type="checkbox" name="is_active" value="1" data-toggle="toggle" data-size="sm" {{ $checked }}>
                     </div>
                    
-                    <button type="submit" id="saveCategory" class="btn btn-primary">Submit</button>
+                    <button type="submit"  class="btn btn-primary">Submit</button>
                 </form>
-            </div>
+            
         </div>
     </div>
 </div>
 @endsection
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
     <script type="text/javascript">
         $(document).ready(function() {
-            // $('.js-example-basic-multiple').select2();
-            var products =  @json($category->products->pluck('id'));
-            console.log(products);
+            var products = @json($category->products->pluck('id'));console.log(products);
             $('.productsSelect').select2();
             $('.productsSelect').val(products).trigger('change')
         });
-
-   </script>
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 @endpush

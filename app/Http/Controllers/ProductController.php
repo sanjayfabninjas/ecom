@@ -7,10 +7,8 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use DataTables;
-use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -27,27 +25,28 @@ class ProductController extends Controller
                     ->addIndexColumn()
                     ->editColumn('active', function($row){
                         if($row->active == 1){
-                           $btn = '<a href="#" id="status/1/'.$row->id.'" class="edit btn btn-primary btn-sm active">Active</a>';
-                            return $btn;
-                        }else{
-                            $activeBtn = '<a href="#" id="status/0/'.$row->id.'" class="edit btn btn-danger btn-sm active" >Deactive</a>';
-                            return $activeBtn;
+                            $statusIcon = '<i class="fas fa-check"></i>';
+                            return $statusIcon;
                         }
                     })
                     ->escapeColumns('active')
                     ->addColumn('action', function($row){
-                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Edit</a>
-                                <a href="javascript:void(0)" data-id="'.$row->id.'"  class="edit btn btn-danger btn-sm deleteProduct">Delete</a>';
-                        return $btn;
+                        $btn='<a href="'.route('product.edit',$row->id).'"  class="btn btn btn-primary btn-sm "><i class="fas fa-edit"></i></a>
+                                <a href="javascript:void(0)"  id="'.$row->id.'"  class="btn btn-danger btn-sm deleteProduct"><i class="fas fa-trash-alt"></i></a>';
+                        return $btn; 
                     })
                     ->make(true);
         } 
          return view('product.product');
     }
 
-   public function store(ProductStoreRequest $request, Product $product)
-    {  
+    public function create(Product $product)
+    {
+        return view('product.manageProduct',compact('product'));
+    }
 
+   public function store(ProductStoreRequest $request, Product $product)
+    { 
         $input = $request->all();
         $product = Product::updateOrCreate(
                 ['id' => $request->product_id],
@@ -55,7 +54,7 @@ class ProductController extends Controller
                     'name' => $request->name, 
                     'price' => $request->price,
                     'stock' => $request->stock,
-                    'active' => $request->active,
+                    'active' => $request->is_active,
                     'user_id'=> Auth::id(),
                 ]
             );       
@@ -67,13 +66,13 @@ class ProductController extends Controller
             $images =  $product->productImages->pluck('image');
             foreach($images as $image)
             {
-                Storage::delete('public/'.$image);
+                Storage::delete('public/products'.$image);
             }
             $files = $request->file('images');
             foreach ($files as $file) 
             {
                 $image = time().'.'.$file->getClientOriginalName();
-                $file->move(storage_path('app/public'), $image);
+                $file->move(storage_path('app/public/products'), $image);
                 $input['images'] = "$image";
 
                 ProductImage::updateOrCreate(
@@ -89,28 +88,20 @@ class ProductController extends Controller
             unset($input['images']);
         }  
         
-        return response()->json(['success'=>'Product saved successfully.']);
+        return redirect(route('product.index'))->with('success','Category Add Successfully...');
     }
 
-    
-
-    public function edit(product $product)
+    public function edit(Product $product)
     {
-        return response()->json(
-            [
-                'product' =>$product,
-                'productImage' => ProductImage::where('product_id',$product->id)->get(),
-            ]
-        );
+        return view('product.manageProduct',compact('product'));
     }
-
-    
 
     public function destroy(product $product)
-    {   $images =  $product->productImages->pluck('image');
+    {   
+        $images =  $product->productImages->pluck('image');
         foreach($images as $image)
         {
-            Storage::delete('public/'.$image);
+            Storage::delete('public/products'.$image);
         }
         $product->delete($product);
         return response()->json(['success'=>'Product Deleted successfully.']);

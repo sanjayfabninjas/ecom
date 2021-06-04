@@ -32,7 +32,7 @@ class ProductStoreRequest extends FormRequest
             'name' => 'required',
             'price' => 'required | integer',
             'stock' => 'required | integer',
-            'images' => 'required'
+            'images' => ''
         ];
     }
 
