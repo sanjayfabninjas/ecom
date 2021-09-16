@@ -73,6 +73,7 @@ Foreign Key Constarin:--
                                 on `product_images`.`id` = `product_product_image`.`product_image_id` 
                                 where `product_product_image`.`product_id` = 1
                         )'
+<<<<<<< HEAD
 
 
 flash message using ajax
@@ -99,3 +100,5 @@ bugs:-
         storage folder delete all image
         product ->delete-> add cade to remove image to staroge folder
         request class validation-> category,product
+=======
+>>>>>>> master

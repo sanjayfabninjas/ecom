@@ -4,7 +4,11 @@
     'name' => 'Laravel',
     'env' => 'local',
     'debug' => true,
+<<<<<<< HEAD
     'url' => 'http://ecom.test',
+=======
+    'url' => 'http://localhost',
+>>>>>>> master
     'asset_url' => NULL,
     'timezone' => 'UTC',
     'locale' => 'en',
@@ -40,7 +44,10 @@
       23 => 'App\\Providers\\AuthServiceProvider',
       24 => 'App\\Providers\\EventServiceProvider',
       25 => 'App\\Providers\\RouteServiceProvider',
+<<<<<<< HEAD
       26 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+=======
+>>>>>>> master
     ),
     'aliases' => 
     array (
@@ -80,7 +87,10 @@
       'URL' => 'Illuminate\\Support\\Facades\\URL',
       'Validator' => 'Illuminate\\Support\\Facades\\Validator',
       'View' => 'Illuminate\\Support\\Facades\\View',
+<<<<<<< HEAD
       'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
+=======
+>>>>>>> master
     ),
   ),
   'auth' => 
@@ -344,6 +354,7 @@
       ),
     ),
   ),
+<<<<<<< HEAD
   'datatables' => 
   array (
     'search' => 
@@ -394,6 +405,8 @@
       'options' => 0,
     ),
   ),
+=======
+>>>>>>> master
   'filesystems' => 
   array (
     'default' => 'local',
@@ -408,7 +421,11 @@
       array (
         'driver' => 'local',
         'root' => 'C:\\laragon\\www\\ecom\\storage\\app/public',
+<<<<<<< HEAD
         'url' => 'http://ecom.test/storage',
+=======
+        'url' => 'http://localhost/storage',
+>>>>>>> master
         'visibility' => 'public',
       ),
       's3' => 

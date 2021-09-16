@@ -15,10 +15,15 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     
     <!-- Fonts -->
     
+=======
+
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+>>>>>>> master
     @yield('css')
 </head>
 <body>
@@ -138,9 +143,14 @@
         
         
     </div>
+<<<<<<< HEAD
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
     @stack('scripts')
     
+=======
+    
+    @yield('scripts')
+>>>>>>> master
 </body>
 </html>

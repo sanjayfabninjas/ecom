@@ -9,8 +9,12 @@
 import $ from 'jquery';
 window.$ = window.jQuery = $; 
 
+<<<<<<< HEAD
 import swal from 'sweetalert2';
 window.Swal = swal;
+=======
+
+>>>>>>> master
 
 
 

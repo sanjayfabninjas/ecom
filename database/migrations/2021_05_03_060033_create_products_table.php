@@ -13,7 +13,11 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
+<<<<<<< HEAD
         Schema::create('Products', function (Blueprint $table) {
+=======
+        Schema::create('products', function (Blueprint $table) {
+>>>>>>> master
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('name');
@@ -33,9 +37,16 @@ class CreateProductsTable extends Migration
      * Reverse the migrations.
      *
      * @return void
+<<<<<<< HEAD
      */ 
     public function down()
     {
         Schema::dropIfExists('Products');
+=======
+     */
+    public function down()
+    {
+        Schema::dropIfExists('products');
+>>>>>>> master
     }
 }
