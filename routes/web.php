@@ -28,10 +28,7 @@ Route::post('/forgot-password', function (Request $request) {
 })->middleware('guest')->name('password.email');
 
 Route::resource('product',ProductController::class);
-<<<<<<< HEAD
-
-=======
 Route::get('products/list', [ProductController::class, 'getProducts'])->name('products.list');
->>>>>>> master
+
 Route::resource('category',CategoryController::class);
 
