@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -34,4 +36,8 @@ Route::post('/forgot-password', function (Request $request) {
                 ? back()->with(['status' => __($status)])
                 : back()->withErrors(['email' => __($status)]);
 })->middleware('guest')->name('password.email');
+
+Route::resource('product',ProductController::class);
+Route::get('products/list', [ProductController::class, 'getProducts'])->name('products.list');
+Route::resource('category',CategoryController::class);
 
